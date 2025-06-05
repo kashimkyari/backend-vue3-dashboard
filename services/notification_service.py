@@ -147,7 +147,6 @@ class NotificationService:
         """Initialize NotificationService with Flask app and SocketIO."""
         try:
             NotificationService.app = app
-            NotificationService.socketio = app.extensions['socketio']
             NotificationService.scheduler = BackgroundScheduler()
             logger.info("NotificationService initialized with Flask app, SocketIO, and scheduler")
         except Exception as e:

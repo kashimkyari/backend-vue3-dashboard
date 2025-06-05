@@ -2,7 +2,7 @@ import os
 from flask import Flask
 from flask_cors import CORS
 from dotenv import load_dotenv
-from extensions import db, socketio, redis_service
+from extensions import db, redis_service
 from services.notification_service import NotificationService
 from sqlalchemy import event
 from sqlalchemy.engine import Engine
@@ -178,7 +178,6 @@ def create_app(config_class=Config, blueprint=None):
 
     # Initialize extensions
     db.init_app(app)
-    socketio.init_app(app, cors_allowed_origins=config_class.CORS_ORIGINS, async_mode='gevent')
     
     if redis_service:
         redis_service.init_app(app)

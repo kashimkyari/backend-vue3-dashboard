@@ -1,12 +1,9 @@
 # utils/notifications.py
-from flask_socketio import SocketIO
 from flask import current_app
 import os
 import logging
 import requests
 from models import Stream, User
-from routes.socketio_routes import emit_stream_update, emit_notification, emit_notification_update, emit_message_update
-from extensions import socketio  # Import socketio from extensions
 
 # Initialize logger
 logger = logging.getLogger(__name__)

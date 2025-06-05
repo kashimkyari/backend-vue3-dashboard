@@ -10,7 +10,7 @@ import os
 import time
 from dotenv import load_dotenv
 from config import create_app, configure_ssl_context
-from extensions import db, socketio
+from extensions import db
 from monitoring import start_notification_monitor, initialize_monitoring
 from routes.monitor_routes import monitor_bp
 

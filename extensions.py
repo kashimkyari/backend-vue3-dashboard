@@ -2,7 +2,6 @@
 import logging
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_socketio import SocketIO
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.executors.pool import ThreadPoolExecutor
 
@@ -12,7 +11,6 @@ logger = logging.getLogger(__name__)
 
 db = SQLAlchemy()
 migrate = Migrate()
-socketio = SocketIO(async_mode='gevent')  # Use gevent for async
 
 # Configure executors with larger pool size and proper shutdown
 executors = {
