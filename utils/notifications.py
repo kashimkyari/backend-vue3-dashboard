@@ -1,5 +1,6 @@
 # utils/notifications.py
 from flask import current_app
+from flask_socketio import SocketIO, emit
 import os
 import logging
 import requests
@@ -10,6 +11,11 @@ logger = logging.getLogger(__name__)
 
 # Cache for agent usernames
 agent_cache = {}
+
+# Get socketio instance from current app
+def get_socketio():
+    """Get the SocketIO instance from the current Flask app"""
+    return current_app.extensions.get('socketio')
 
 def forward_to_main_app(event, data, namespace='/notifications'):
     """Forward a SocketIO event to the main app's SocketIO server (used by monitoring app)"""
@@ -39,6 +45,11 @@ def emit_notification(notification_data, forward_to_main=False):
     namespace = '/notifications'
     
     try:
+        socketio = get_socketio()
+        if not socketio:
+            logger.error("SocketIO instance not found")
+            return False
+            
         socketio.emit('notification', notification_data, namespace=namespace)
         logger.info(f"Emitted notification: {notification_data.get('event_type', 'unknown')}")
         
@@ -75,6 +86,11 @@ def emit_notification_update(notification_id, update_type='read', forward_to_mai
     data = {'id': notification_id, 'type': update_type}
 
     try:
+        socketio = get_socketio()
+        if not socketio:
+            logger.error("SocketIO instance not found")
+            return False
+            
         socketio.emit('notification_update', data, namespace=namespace)
         logger.info(f"Emitted notification update: {update_type} for {notification_id}")
         
@@ -92,6 +108,11 @@ def emit_stream_update(stream_data, forward_to_main=False):
     namespace = '/notifications'
 
     try:
+        socketio = get_socketio()
+        if not socketio:
+            logger.error("SocketIO instance not found")
+            return False
+            
         socketio.emit('stream_update', stream_data, namespace=namespace)
         logger.info(f"Emitted stream update for stream ID: {stream_data.get('id')}")
         
@@ -109,6 +130,11 @@ def emit_message_update(message_data, forward_to_main=False):
     namespace = '/notifications'
 
     try:
+        socketio = get_socketio()
+        if not socketio:
+            logger.error("SocketIO instance not found")
+            return False
+            
         receiver_id = message_data.get('receiver_id')
         if receiver_id:
             socketio.emit('new_message', message_data, room=f"user_{receiver_id}", namespace=namespace)
@@ -132,6 +158,11 @@ def emit_assignment_update(assignment_data, forward_to_main=False):
     namespace = '/notifications'
 
     try:
+        socketio = get_socketio()
+        if not socketio:
+            logger.error("SocketIO instance not found")
+            return False
+            
         agent_id = assignment_data.get('agent_id')
         if agent_id:
             socketio.emit('assignment_update', assignment_data, room=f"user_{agent_id}", namespace=namespace)
@@ -151,6 +182,11 @@ def emit_stream_notification(notification_data, stream_id, forward_to_main=False
     namespace = '/notifications'
 
     try:
+        socketio = get_socketio()
+        if not socketio:
+            logger.error("SocketIO instance not found")
+            return False
+            
         stream_room = f"stream_{stream_id}"
         socketio.emit('notification', notification_data, room=stream_room, namespace=namespace)
         logger.info(f"Emitted notification to stream room: {stream_room}")
@@ -169,6 +205,11 @@ def emit_role_notification(notification_data, role, forward_to_main=False):
     namespace = '/notifications'
 
     try:
+        socketio = get_socketio()
+        if not socketio:
+            logger.error("SocketIO instance not found")
+            return False
+            
         role_room = f"role_{role}"
         socketio.emit('notification', notification_data, room=role_room, namespace=namespace)
         logger.info(f"Emitted notification to role room: {role_room}")
@@ -187,6 +228,11 @@ def emit_agent_notification(notification_data, agent_id, forward_to_main=False):
     namespace = '/notifications'
 
     try:
+        socketio = get_socketio()
+        if not socketio:
+            logger.error("SocketIO instance not found")
+            return False
+            
         agent_room = f"user_{agent_id}"
         socketio.emit('notification', notification_data, room=agent_room, namespace=namespace)
         logger.info(f"Emitted notification to agent: {agent_id}")
