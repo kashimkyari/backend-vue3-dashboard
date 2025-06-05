@@ -1,0 +1,61 @@
+# Flask and Web Framework
+Flask
+Flask-Cors
+Flask-SQLAlchemy
+Flask-Migrate
+Flask-SocketIO
+Flask-JWT-Extended
+Flask-Limiter
+
+# WebSocket and Real-time Communication
+python-socketio
+python-engineio
+gevent
+gevent-websocket
+simple-websocket
+
+# Database and ORM
+psycopg2-binary
+SQLAlchemy
+
+# Configuration and Environment
+python-dotenv
+
+# Web Server
+gunicorn
+
+# HTTP and API
+requests
+
+# Date and Time
+python-dateutil
+APScheduler
+
+# Computer Vision and Image Processing
+pytesseract
+opencv-python
+ultralytics
+
+# Audio and Speech Processing
+openai-whisper
+librosa
+scipy
+
+# Natural Language Processing
+vaderSentiment
+
+# Network and Proxy
+free-proxy
+
+# Messaging and Notifications
+python-telegram-bot
+
+
+redis
+hiredis
+Flask-Session
+
+# Optional: For Redis monitoring and management
+redis-py-cluster
+cloudscraper
+fake_useragent

@@ -1,0 +1,11 @@
+__pycache__/
+venv/
+app.log
+.env
+audio_detection/
+proxies.txt
+*.pyc
+transcriptions/
+yolo11x.pt
+yolo11m.pt
+.prettierrc

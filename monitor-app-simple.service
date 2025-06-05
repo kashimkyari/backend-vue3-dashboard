@@ -1,0 +1,25 @@
+[Unit]
+Description=LiveStream Monitor App Service (Simple)
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ec2-user
+Group=ec2-user
+WorkingDirectory=/home/ec2-user/LiveStream_Monitoring_Vue3_Flask/backend
+Environment=PYTHONUNBUFFERED=1
+Environment=FLASK_DEBUG=false
+Environment=ENABLE_SSL=true
+Environment=MONITOR_PORT=5001
+Environment=SSL_CERT_PATH=/home/ec2-user/LiveStream_Monitoring_Vue3_Flask/backend/fullchain.pem
+Environment=SSL_KEY_PATH=/home/ec2-user/LiveStream_Monitoring_Vue3_Flask/backend/privkey.pem
+ExecStart=/opt/pytorch/bin/gunicorn --config gunicorn_monitor.conf.py monitor_app:app
+Restart=on-failure
+RestartSec=5s
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=monitor-app
+
+[Install]
+WantedBy=multi-user.target

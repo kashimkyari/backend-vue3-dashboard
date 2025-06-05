@@ -1,0 +1,35 @@
+[Unit]
+Description=LiveStream Monitoring Backend Service (Gevent Optimized)
+After=network.target
+Wants=network-online.target
+Documentation=https://monitor.jetcamstudio.com/
+
+[Service]
+Type=simple
+User=ec2-user
+Group=ec2-user
+WorkingDirectory=/home/ec2-user/LiveStream_Monitoring_Vue3_Flask/backend
+Environment=PYTHONUNBUFFERED=1
+Environment=FLASK_DEBUG=false
+Environment=ENABLE_SSL=true
+Environment=CERT_DIR=/home/ec2-user/LiveStream_Monitoring_Vue3_Flask/backend
+Environment=SSL_CERT_PATH=/home/ec2-user/LiveStream_Monitoring_Vue3_Flask/backend/fullchain.pem
+Environment=SSL_KEY_PATH=/home/ec2-user/LiveStream_Monitoring_Vue3_Flask/backend/privkey.pem
+ExecStart=/opt/pytorch/bin/gunicorn \
+  --config /home/ec2-user/LiveStream_Monitoring_Vue3_Flask/backend/gunicorn.conf.py \
+  main:app
+Restart=on-failure
+RestartSec=5s
+StartLimitBurst=3
+StartLimitInterval=60s
+LimitNOFILE=65536
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=read-only
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=livemon-backend
+
+[Install]
+WantedBy=multi-user.target
